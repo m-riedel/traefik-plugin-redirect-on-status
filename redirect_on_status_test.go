@@ -1,4 +1,4 @@
-package traefik_redirect_on_error
+package traefik_plugin_redirect_on_status
 
 import (
 	"bytes"

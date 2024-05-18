@@ -1,4 +1,4 @@
-package traefik_redirect_on_error
+package traefik_plugin_redirect_on_status
 
 import (
 	"context"
@@ -11,10 +11,10 @@ import (
 
 // Config holds configuration of the plugin
 type Config struct {
-	RedirectUri  string   `json:"uri,omitempty" toml:"uri,omitempty" yaml:"uri,omitempty"`
-	RedirectCode int      `json:"redirectCode,omitempty" toml:"redirectCode,omitempty" yaml:"redirectCode,omitempty"`
-	Status       []string `json:"status,omitempty" toml:"status,omitempty" yaml:"status,omitempty"`
-	Method       []string `json:"method,omitempty" toml:"method,omitempty" yaml:"method,omitempty"`
+	RedirectUri  string
+	RedirectCode int
+	Status       []string
+	Method       []string
 }
 
 // CreateConfig creates Config with default attributes
@@ -40,7 +40,7 @@ type RedirectOnStatusPlugin struct {
 // New creates RedirectOnStatusPlugin from the given fields. Checks that the Config is correct
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	if len(config.RedirectUri) == 0 {
-		return nil, fmt.Errorf("url cannot be empty")
+		return nil, fmt.Errorf("uri cannot be empty")
 	}
 	if config.RedirectCode == 0 {
 		return nil, fmt.Errorf("redirectCode cannot be empty")
