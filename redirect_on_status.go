@@ -78,7 +78,8 @@ func (e RedirectOnStatusPlugin) ServeHTTP(rw http.ResponseWriter, request *http.
 	// use the interceptor
 	if len(e.methods) == 0 ||
 		slices.Contains(e.methods, request.Method) {
-		e.next.ServeHTTP(interceptor.NewRedirectOnStatusInterceptor(rw, request, e.redirectUri, e.redirectCode, e.httpCodeRanges), request)
+		rwInterceptor := interceptor.NewRedirectOnStatusInterceptor(rw, request, e.redirectUri, e.redirectCode, e.httpCodeRanges)
+		e.next.ServeHTTP(rwInterceptor, request)
 		return
 	}
 
