@@ -1,10 +1,9 @@
 displayName: Redirect on Status
 type: middleware
 
-
 import: github.com/m-riedel/traefik-plugin-redirect-on-status
 
-summary: '[WIP] Return a redirect when the down stream response returns your defined status code'
+summary: 'Return a redirect when the down stream response returns your defined status code'
 
 testData:
   Method:
