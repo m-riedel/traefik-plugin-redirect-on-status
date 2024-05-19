@@ -6,9 +6,9 @@ import: github.com/m-riedel/traefik-plugin-redirect-on-status
 summary: 'Return a redirect when the down stream response returns your defined status code'
 
 testData:
-  Method:
+  method:
     - 'GET'
-  Status:
+  status:
     - '200'
-  RedirectCode: 307
-  RedirectUri: '/test'
+  redirectCode: 307
+  redirectUri: '/test'

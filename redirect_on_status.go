@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"github.com/m-riedel/traefik-plugin-redirect-on-status/pkg/interceptor"
 	"github.com/m-riedel/traefik-plugin-redirect-on-status/pkg/types"
+	"github.com/m-riedel/traefik-plugin-redirect-on-status/pkg/util"
 	"net/http"
-	"slices"
 )
 
 // Config holds configuration of the plugin
 type Config struct {
-	RedirectUri  string
-	RedirectCode int
-	Status       []string
-	Method       []string
+	RedirectUri  string   `json:"redirectUri"`
+	RedirectCode int      `json:"redirectCode"`
+	Status       []string `json:"status"`
+	Method       []string `json:"method"`
 }
 
 // CreateConfig creates Config with default attributes
@@ -77,7 +77,7 @@ func (e RedirectOnStatusPlugin) ServeHTTP(rw http.ResponseWriter, request *http.
 	// If no method is given or methods contains the request method,
 	// use the interceptor
 	if len(e.methods) == 0 ||
-		slices.Contains(e.methods, request.Method) {
+		util.ContainsStr(e.methods, request.Method) {
 		rwInterceptor := interceptor.NewRedirectOnStatusInterceptor(rw, request, e.redirectUri, e.redirectCode, e.httpCodeRanges)
 		e.next.ServeHTTP(rwInterceptor, request)
 		return
